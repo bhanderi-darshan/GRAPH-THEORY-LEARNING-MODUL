@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Theory Explorer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">StudyMitra- Learn, Apply, Succeed</div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#quiz">Quiz</a>
+                <a href="#about">About Us</a>
+                <a href="#graph-theory">Graph Theory</a>
+                <a href="#contact">Contact</a>
+                <a href="login.html">Login</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <h1>Discover the Power of Graph Theory</h1>
+            <p>Unlock the secrets of networks, algorithms, and complex systems through the fascinating world of graph theory.</p>
+            <a href="login.html" class="cta-button">Start Your Journey</a>
+
+        </section>
+
+        <section id="about" class="section">
+            <h2>About Us</h2>
+            <p>At Graph Theory Explorer, we're passionate about making the complex world of graph theory accessible to everyone. Our team of expert mathematicians, computer scientists, and educators have come together to create a comprehensive and engaging learning platform.</p>
+            <p>Whether you're a student, researcher, or industry professional, our carefully curated curriculum and interactive tools will help you master the fundamentals and advanced concepts of graph theory.</p>
+        </section>
+        <section id="quiz" class="section">
+            <a href="quiz.html" class="cta-button">Quiz</a>
+        </section>
+        <section id="coloring" class="section">
+            <a href="coloring.html" class="cta-button">Coloring Game</a>
+        </section>
+        <section id="Edag_coloring" class="section">
+            <a href="edag_coloring.html" class="cta-button">Edag Coloring Game</a>
+        </section>
+        <section id="graph-theory" class="section">
+            <h2>Understanding Graph Theory</h2>
+            <p>Graph theory is a fascinating field of mathematics that studies the relationships between objects. It has wide-ranging applications in computer science, network analysis, social sciences, and many other fields.</p>
+            <div class="graph-theory-grid">
+                <div class="graph-theory-item">
+                    <h3><a href="p1.html">Fundamentals</a></h3>
+                    <p>Learn about vertices, edges, and basic graph properties.</p>
+                </div>
+                <div class="graph-theory-item">
+                    <h3><a href="p2.html">Algorithms</a></h3>
+                    <p>Explore essential algorithms like shortest path and minimum spanning tree.</p>
+                </div>
+                <div class="graph-theory-item">
+                    <h3><a href="p3.html">Applications</a></h3>
+                    <p>Discover how graph theory is used in real-world scenarios.</p>
+                </div>
+                <div class="graph-theory-item">
+                    <h3><a href="p4.html"> Concepts</a></h3>
+                    <p>Dive into topics like graph coloring, matching theory, and spectral graph theory.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>Guided By - Prof.Foram Chandarana <br>Refrence - Narshin Deo
+            </p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">FAQ</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
+
+
+
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Topics Explorer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f39c12;
+            --background-color: #f0f4f8;
+            --text-color: #333;
+            --card-bg-color: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 300px;
+            background-color: var(--card-bg-color);
+            padding: 2rem;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .topic-list {
+            list-style-type: none;
+        }
+
+        .topic-button {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background-color: var(--card-bg-color);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: var(--text-color);
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .topic-button:hover, .topic-button.active {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .topic-button i {
+            margin-right: 10px;
+        }
+
+        .subtopic-list {
+            display: none;
+            margin-left: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .topic-button.active + .subtopic-list {
+            display: block;
+        }
+
+        .subtopic-button {
+            display: block;
+            width: 100%;
+            padding: 0.5rem 1rem;
+            margin-top: 0.5rem;
+            background-color: var(--background-color);
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .subtopic-button:hover, .subtopic-button.active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .topic-content {
+            background-color: var(--card-bg-color);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .topic-content h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .topic-content p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                max-height: 50vh;
+            }
+        }
+
+        .animation-fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h1>Graph Topics</h1>
+            <ul class="topic-list">
+                <li>
+                    <button class="topic-button" data-topic="graph">
+                        <i class="fas fa-project-diagram"></i>Graph
+                    </button>
+                    <ul class="subtopic-list">
+                        <li><button class="subtopic-button" data-subtopic="definition">Definition</button></li>
+                        <li><button class="subtopic-button" data-subtopic="types">Types</button></li>
+                        <li><button class="subtopic-button" data-subtopic="properties">Properties</button></li>
+                    </ul>
+                </li>
+                <li>
+                    <button class="topic-button" data-topic="representation">
+                        <i class="fas fa-sitemap"></i>Graph Representation
+                    </button>
+                    <ul class="subtopic-list">
+                        <li><button class="subtopic-button" data-subtopic="adjacencyMatrix">Adjacency Matrix</button></li>
+                        <li><button class="subtopic-button" data-subtopic="adjacencyList">Adjacency List</button></li>
+                    </ul>
+                </li>
+                <li>
+                    <button class="topic-button" data-topic="algorithm">
+                        <i class="fas fa-code-branch"></i>Graph Algorithm
+                    </button>
+                    <ul class="subtopic-list">
+                        <li><button class="subtopic-button" data-subtopic="dfs">Depth-First Search (DFS)</button></li>
+                        <li><button class="subtopic-button" data-subtopic="bfs">Breadth-First Search (BFS)</button></li>
+                    </ul>
+                </li>
+                <li>
+                    <button class="topic-button" data-topic="coloring">
+                        <i class="fas fa-palette"></i>Graph Coloring
+                    </button>
+                    <ul class="subtopic-list">
+                        <li><button class="subtopic-button" data-subtopic="vertexColoring">Vertex Coloring</button></li>
+                        <li><button class="subtopic-button" data-subtopic="edgeColoring">Edge Coloring</button></li>
+                    </ul>
+                </li>
+                <li>
+                    <button class="topic-button" data-topic="connectivity">
+                        <i class="fas fa-network-wired"></i>Graph Connectivity
+                    </button>
+                    <ul class="subtopic-list">
+                        <li><button class="subtopic-button" data-subtopic="vertexConnectivity">Vertex Connectivity</button></li>
+                        <li><button class="subtopic-button" data-subtopic="edgeConnectivity">Edge Connectivity</button></li>
+                    </ul>
+                </li>
+                <li>
+                    <button class="topic-button" data-topic="planar">
+                        <i class="fas fa-draw-polygon"></i>Planar Graph
+                    </button>
+                    <ul class="subtopic-list">
+                        <li><button class="subtopic-button" data-subtopic="eulerFormula">Euler's Formula</button></li>
+                        <li><button class="subtopic-button" data-subtopic="kuratowskiTheorem">Kuratowski's Theorem</button></li>
+                    </ul>
+                </li>
+                <li>
+                    <button class="topic-button" data-topic="advanced">
+                        <i class="fas fa-brain"></i>Advanced Graph
+                    </button>
+                    <ul class="subtopic-list">
+                        <li><button class="subtopic-button" data-subtopic="networkFlow">Network Flow</button></li>
+                        <li><button class="subtopic-button" data-subtopic="spectralTheory">Spectral Graph Theory</button></li>
+                    </ul>
+                </li>
+            </ul>
+        </aside>
+        <main class="main-content">
+            <div id="topic-content" class="topic-content">
+                <h2>Welcome to Graph Topics Explorer</h2>
+                <p>Select a topic from the sidebar to learn more about various graph concepts.</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <script>
+        const topicContent = {
+            graph: {
+                title: "Graph",
+                content: "A graph is a non-linear data structure consisting of nodes and edges. The nodes are sometimes also referred to as vertices and the edges are lines or arcs that connect any two nodes in the graph. Graphs are used to solve many real-life problems.",
+                subtopics: {
+                    definition: {
+                        title: "Graph Definition",
+                        content: "In mathematics, a graph is an abstract representation of a set of objects where some pairs of the objects are connected by links. The interconnected objects are represented by mathematical abstractions called vertices, and the links that connect some pairs of vertices are called edges."
+                    },
+                    types: {
+                        title: "Types of Graphs",
+                        content: "There are several types of graphs, including directed graphs (digraphs), undirected graphs, weighted graphs, cyclic graphs, acyclic graphs, and many more. Each type has its own properties and applications in various fields of study and real-world scenarios."
+                    },
+                    properties: {
+                        title: "Graph Properties",
+                        content: "Graphs have various properties that characterize their structure and behavior. Some important properties include connectivity, degree, path, cycle, tree, and planarity. These properties help in analyzing and solving complex problems in graph theory and its applications."
+                    }
+                }
+            },
+            representation: {
+                title: "Graph Representation",
+                content: "Graphs can be represented in various ways, primarily through adjacency matrices and adjacency lists. An adjacency matrix is a 2D array of size V x V where V is the number of vertices in a graph, while an adjacency list is an array of linked lists.",
+                subtopics: {
+                    adjacencyMatrix: {
+                        title: "Adjacency Matrix",
+                        content: "An adjacency matrix is a square matrix used to represent a finite graph. The elements of the matrix indicate whether pairs of vertices are adjacent or not in the graph."
+                    },
+                    adjacencyList: {
+                        title: "Adjacency List",
+                        content: "An adjacency list is a collection of unordered lists used to represent a finite graph. Each list describes the set of neighbors of a vertex in the graph."
+                    }
+                }
+            },
+            algorithm: {
+                title: "Graph Algorithm",
+                content: "Graph algorithms are a set of instructions that traverse (visit nodes of) a graph. Some common graph algorithms include Depth-First Search (DFS), Breadth-First Search (BFS), Dijkstra's algorithm for finding the shortest path, and Kruskal's algorithm for finding the minimum spanning tree.",
+                subtopics: {
+                    dfs: {
+                        title: "Depth-First Search (DFS)",
+                        content: "DFS is an algorithm for traversing or searching tree or graph data structures. It starts at a selected node and explores as far as possible along each branch before backtracking."
+                    },
+                    bfs: {
+                        title: "Breadth-First Search (BFS)",
+                        content: "BFS is an algorithm for traversing or searching tree or graph data structures. It starts at a selected node and explores all the neighboring nodes at the present depth prior to moving on to the nodes at the next depth level."
+                    }
+                }
+            },
+            coloring: {
+                title: "Graph Coloring",
+                content: "Graph coloring is the assignment of labels, called colors, to elements of a graph subject to certain constraints. In its simplest form, it is a way of coloring the vertices of a graph such that no two adjacent vertices are of the same color.",
+                subtopics: {
+                    vertexColoring: {
+                        title: "Vertex Coloring",
+                        content: "Vertex coloring is the most common type of graph coloring. The goal is to assign colors to vertices such that no two adjacent vertices share the same color."
+                    },
+                    edgeColoring: {
+                        title: "Edge Coloring",
+                        content: "Edge coloring assigns colors to the edges of a graph such that no two adjacent edges share the same color."
+                    }
+                }
+            },
+            connectivity: {
+                title: "Graph Connectivity",
+                content: "Graph connectivity refers to the minimum number of elements (nodes or edges) that need to be removed to disconnect the remaining nodes from each other. It's a measure of how connected a graph is, and how difficult it is to separate its nodes into isolated groups.",
+                subtopics: {
+                    vertexConnectivity: {
+                        title: "Vertex Connectivity",
+                        content: "Vertex connectivity is the minimum number of vertices that need to be removed to disconnect the graph."
+                    },
+                    edgeConnectivity: {
+                        title: "Edge Connectivity",
+                        content: "Edge connectivity is the minimum number of edges that need to be removed to disconnect the graph."
+                    }
+                }
+            },
+            planar: {
+                title: "Planar Graph",
+                content: "A planar graph is a graph that can be embedded in the plane, i.e., it can be drawn on the plane in such a way that its edges intersect only at their endpoints. In other words, it can be drawn in such a way that no edges cross each other.",
+                subtopics: {
+                    eulerFormula: {
+                        title: "Euler's Formula",
+                        content: "For a connected planar graph, Euler's formula states that V - E + F = 2, where V is the number of vertices, E is the number of edges, and F is the number of faces."
+                    },
+                    kuratowskiTheorem: {
+                        title: "Kuratowski's Theorem",
+                        content: "Kuratowski's theorem states that a finite graph is planar if and only if it does not contain a subgraph that is a subdivision of K5 (the complete graph on five vertices) or K3,3 (the complete bipartite graph on six vertices, three of which connect to each of the other three)."
+                    }
+                }
+            },
+            advanced: {
+                title: "Advanced Graph",
+                content: "Advanced graph topics include complex algorithms and specialized graph types. These may include topics like network flow algorithms, graph isomorphism, spectral graph theory, random graphs, and applications of graph theory in machine learning and artificial intelligence.",
+                subtopics: {
+                    networkFlow: {
+                        title: "Network Flow",
+                        content: "Network flow problems involve finding the maximum flow through a flow network, which has applications in transportation, logistics, and  computer networking."
+                    },
+                    spectralTheory: {
+                        title: "Spectral Graph Theory",
+                        content: "Spectral graph theory studies the properties of graphs in relation to the eigenvalues and eigenvectors of matrices associated with the graph, such as its adjacency matrix or Laplacian matrix."
+                    }
+                }
+            }
+        };
+
+        document.querySelectorAll('.topic-button').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const topic = button.dataset.topic;
+                const content = topicContent[topic];
+                
+                document.querySelectorAll('.topic-button').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                const topicContentElement = document.getElementById('topic-content');
+                topicContentElement.innerHTML = `
+                    <h2>${content.title}</h2>
+                    <p>${content.content}</p>
+                `;
+                topicContentElement.classList.remove('animation-fade-in');
+                void topicContentElement.offsetWidth; // Trigger reflow
+                topicContentElement.classList.add('animation-fade-in');
+            });
+        });
+
+        document.querySelectorAll('.subtopic-button').forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.stopPropagation();
+                const topic = button.closest('.topic-list > li').querySelector('.topic-button').dataset.topic;
+                const subtopic = button.dataset.subtopic;
+                const content = topicContent[topic].subtopics[subtopic];
+                
+                document.querySelectorAll('.subtopic-button').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                const topicContentElement = document.getElementById('topic-content');
+                topicContentElement.innerHTML = `
+                    <h2>${content.title}</h2>
+                    <p>${content.content}</p>
+                `;
+                topicContentElement.classList.remove('animation-fade-in');
+                void topicContentElement.offsetWidth; // Trigger reflow
+                topicContentElement.classList.add('animation-fade-in');
+            });
+        });
+    </script>
+</body>
+</html>
