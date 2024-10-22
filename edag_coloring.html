@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Edge Coloring Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        #graph {
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .edge {
+            stroke-width: 5;
+            transition: stroke-width 0.3s;
+            cursor: pointer;
+        }
+        .edge:hover {
+            stroke-width: 7;
+        }
+        .node {
+            fill: #333;
+        }
+        #colorPalette {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        .color {
+            width: 30px;
+            height: 30px;
+            margin: 0 5px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .color:hover {
+            transform: scale(1.1);
+        }
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #message {
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Random Edge Coloring Game</h1>
+        <p>Color the edges using the minimum number of colors. No adjacent edges should have the same color!</p>
+        <div id="colorPalette"></div>
+        <svg id="graph" width="400" height="300"></svg>
+        <br>
+        <button id="checkButton">Check Coloring</button>
+        <button id="newGraphButton">New Graph</button>
+        <div id="message" aria-live="polite"></div>
+    </div>
+
+    <script>
+        const svg = document.getElementById('graph');
+        const colorPalette = document.getElementById('colorPalette');
+        const checkButton = document.getElementById('checkButton');
+        const newGraphButton = document.getElementById('newGraphButton');
+        const message = document.getElementById('message');
+
+        const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#C06C84'];
+        let selectedColor = colors[0];
+        let graph = { nodes: [], edges: [] };
+
+        function generateRandomGraph(numNodes, numEdges) {
+            const nodes = Array.from({ length: numNodes }, (_, i) => ({
+                id: i,
+                x: Math.random() * 300 + 50,
+                y: Math.random() * 200 + 50
+            }));
+
+            const edges = [];
+            while (edges.length < numEdges) {
+                const source = Math.floor(Math.random() * numNodes);
+                const target = Math.floor(Math.random() * numNodes);
+                if (source !== target && !edges.some(e => 
+                    (e.source === source && e.target === target) || 
+                    (e.source === target && e.target === source)
+                )) {
+                    edges.push({ source, target, id: `e${source}${target}`, color: '#ddd' });
+                }
+            }
+
+            return { nodes, edges };
+        }
+
+        function drawGraph() {
+            svg.innerHTML = '';
+            graph.edges.forEach(edge => {
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', graph.nodes[edge.source].x);
+                line.setAttribute('y1', graph.nodes[edge.source].y);
+                line.setAttribute('x2', graph.nodes[edge.target].x);
+                line.setAttribute('y2', graph.nodes[edge.target].y);
+                line.setAttribute('stroke', edge.color);
+                line.setAttribute('class', 'edge');
+                line.setAttribute('id', edge.id);
+                line.addEventListener('click', () => {
+                    edge.color = selectedColor;
+                    line.setAttribute('stroke', selectedColor);
+                });
+                svg.appendChild(line);
+            });
+
+            graph.nodes.forEach(node => {
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', node.x);
+                circle.setAttribute('cy', node.y);
+                circle.setAttribute('r', 6);
+                circle.setAttribute('class', 'node');
+                svg.appendChild(circle);
+            });
+        }
+
+        function initializeColorPalette() {
+            colorPalette.innerHTML = '';
+            colors.forEach(color => {
+                const colorElement = document.createElement('div');
+                colorElement.className = 'color';
+                colorElement.style.backgroundColor = color;
+                colorElement.addEventListener('click', () => selectedColor = color);
+                colorPalette.appendChild(colorElement);
+            });
+        }
+
+        function checkColoring() {
+            const uncoloredEdges = graph.edges.filter(edge => edge.color === '#ddd');
+            if (uncoloredEdges.length > 0) {
+                message.textContent = 'Please color all edges before checking!';
+                message.style.color = 'orange';
+                return;
+            }
+
+            const isValid = graph.edges.every(edge => {
+                const adjacentEdges = graph.edges.filter(e => 
+                    e !== edge && (e.source === edge.source || e.source === edge.target || e.target === edge.source || e.target === edge.target)
+                );
+                return adjacentEdges.every(adjEdge => adjEdge.color !== edge.color);
+            });
+
+            if (isValid) {
+                const usedColors = new Set(graph.edges.map(edge => edge.color));
+                message.textContent = `Congratulations! Valid coloring using ${usedColors.size} color(s).`;
+                message.style.color = 'green';
+            } else {
+                message.textContent = 'Invalid coloring. Adjacent edges have the same color.';
+                message.style.color = 'red';
+            }
+        }
+
+        function resetGraph() {
+            graph = generateRandomGraph(6, 10);
+            drawGraph();
+            message.textContent = '';
+        }
+
+        checkButton.addEventListener('click', checkColoring);
+        newGraphButton.addEventListener('click', resetGraph);
+
+        initializeColorPalette();
+        resetGraph();
+    </script>
+</body>
+</html>

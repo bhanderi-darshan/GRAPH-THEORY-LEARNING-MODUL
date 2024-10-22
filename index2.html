@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Topics Explorer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f39c12;
+            --tertiary-color: #2ecc71;
+            --background-color: #f0f4f8;
+            --text-color: #333;
+            --card-bg-color: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 300px;
+            background-color: var(--card-bg-color);
+            padding: 2rem;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .topic-list {
+            list-style-type: none;
+        }
+
+        .topic-button, .subtopic-button, .submenu-button {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background-color: var(--card-bg-color);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            color: var(--text-color);
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .topic-button:hover, .topic-button.active {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtopic-button:hover, .subtopic-button.active {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .submenu-button:hover, .submenu-button.active {
+            background-color: var(--tertiary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .topic-button i, .subtopic-button i, .submenu-button i {
+            margin-right: 10px;
+        }
+
+        .subtopic-list, .submenu-list {
+            display: none;
+            margin-left: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .topic-button.active + .subtopic-list,
+        .subtopic-button.active + .submenu-list {
+            display: block;
+        }
+
+        .subtopic-button, .submenu-button {
+            font-size: 0.9rem;
+            padding: 0.8rem;
+        }
+
+        .submenu-button {
+            font-size: 0.8rem;
+            padding: 0.6rem;
+        }
+
+        .topic-content {
+            background-color: var(--card-bg-color);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .topic-content h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .topic-content p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                max-height: 50vh;
+            }
+        }
+
+        .animation-fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h1>Graph Topics</h1>
+            <ul class="topic-list">
+                <li>
+                    <button class="topic-button" data-topic="graph">
+                        <i class="fas fa-project-diagram"></i>Graph
+                    </button>
+                    <ul class="subtopic-list">
+                        <li>
+                            <button class="subtopic-button" data-subtopic="definition">Definition</button>
+                            <ul class="submenu-list">
+                                <li><button class="submenu-button" data-submenu="definition" onclick="location.href='graph.html'">Graph</button></li>
+                                <li><button class="submenu-button" data-submenu="definition" onclick="location.href='walk.html'">Walk</button></li>
+                                <li><button class="submenu-button" data-submenu="definition" onclick="location.href='path.html'">Path</button></li>
+                                <li><button class="submenu-button" data-submenu="definition" onclick="location.href='circuit.html'">Circuit</button></li>
+                            </ul>
+                        </li>
+
+
+                        <li><button class="subtopic-button" data-subtopic="typesofgraph">Types Of Edges and Vertices</button>
+                        <ul class="submenu-list">
+                            <li><button class="submenu-button" data-submenu="directed" onclick="location.href='loop.html'">Loops</button></li>
+                            <li><button class="submenu-button" data-submenu="directed" onclick="location.href='paralleledge.html'">Parallel Edges</button></li>
+                            <li><button class="submenu-button" data-submenu="directed" onclick="location.href='adjacentvertices.html'">Adjacent Vertices</button></li>
+                            <li><button class="submenu-button" data-submenu="directed" onclick="location.href='adjacentedges.html'">Adjacent Edges</button></li>
+                            <li><button class="submenu-button" data-submenu="directed" onclick="location.href='degreeofvertex.html'">Degree Of Vertex</button></li>
+                            <li><button class="submenu-button" data-submenu="directed" onclick="location.href='pendentvertex.html'">Pendent Vertex</button></li>
+                            <li><button class="submenu-button" data-submenu="directed" onclick="location.href='isolatedvertex.html'">Isolated Vertex</button></li>
+                            <li><button class="submenu-button" data-submenu="directed" onclick="location.href='evenvertex.html'">Even Vertex</button></li>
+                            <li><button class="submenu-button" data-submenu="directed" onclick="location.href='oddvertex.html'">Odd Vertex</button></li>
+                        </ul>
+                        </li>
+
+
+
+                        <li>
+                            <button class="subtopic-button" data-subtopic="typesofgraph">Types Of Graph</button>
+                            <ul class="submenu-list">
+                                <li><button class="submenu-button" data-submenu="directed" onclick="location.href='nullgraph.html'">Null Graphs</button></li>
+                                <li><button class="submenu-button" data-submenu="directed" onclick="location.href='trivialgraph.html'">Trivial Graphs</button></li>
+                                <li><button class="submenu-button" data-submenu="directed" onclick="location.href='simplegraph.html'">Simple Graphs</button></li>
+                                <li><button class="submenu-button" data-submenu="directed" onclick="location.href='regulargraph.html'">Regular Graphs</button></li>
+                                <li><button class="submenu-button" data-submenu="directed" onclick="location.href='directedgraph.html'">Directed Graphs</button></li>
+                                <li><button class="submenu-button" data-submenu="directed" onclick="location.href='undirectedgraph.html'">Undirected Graphs</button></li>
+                                <li><button class="submenu-button" data-submenu="directed" onclick="location.href='completegraph.html'">complete Graphs</button></li>
+                                <li><button class="submenu-button" data-submenu="undirected" onclick="location.href='bipartitegraph.html'">Bipartite Graphs</button></li>
+                                <li><button class="submenu-button" data-submenu="weighted" onclick="location.href='completebipartite.html'">Complete Bipartite Graphs</button></li>
+                                <li><button class="submenu-button" data-submenu="undirected" onclick="location.href='subgraph.html'">Sub Graphs</button></li>
+                                <li><button class="submenu-button" data-submenu="undirected" onclick="location.href='canddcgraph.html'">connected & disconnected Graphs</button></li>
+                                <li><button class="submenu-button" data-submenu="undirected" onclick="location.href='eulargraph.html'">Eular Graphs</button></li>
+                                <li><button class="submenu-button" data-submenu="undirected" onclick="location.href='hamiltoniangraph.html'">Hamiltonian Graphs</button></li>
+                                <li><button class="submenu-button" data-submenu="undirected" onclick="location.href='petersengraph.html'">Petersen Graphs</button></li>
+                            </ul>
+                        </li>
+
+
+
+                        <li><button class="subtopic-button" data-subtopic="typesofgraph">Theorems</button>
+                            <ul class="submenu-list">
+                                <li><button class="submenu-button" data-submenu="directed" onclick="location.href='theorem1.html'">Theorem:-1</button></li>
+                                <li><button class="submenu-button" data-submenu="directed" onclick="location.href='theorem2.html'">Theorem:-2</button></li>
+                                <li><button class="submenu-button" data-submenu="directed" onclick="location.href='theorem3.html'">Theorem:-3</button></li>
+                                <li><button class="submenu-button" data-submenu="directed" onclick="location.href='theorem4.html'">Theorem:-4</button></li>
+                                <li><button class="submenu-button" data-submenu="directed" onclick="location.href='theorem5.html'">Theorem:-5</button></li>
+                        </ul>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+
+
+
+            <li>
+                <button class="topic-button" data-topic="graph"><i class="fas fa-project-diagram"></i>Tree</button>
+                <ul class="subtopic-list">
+                    <li>
+                        <button class="subtopic-button" data-subtopic="definition">Definition</button>
+                        <button class="subtopic-button" data-subtopic="definition">Forest</button>
+                        <button class="subtopic-button" data-subtopic="definition">Binary Tree</button>
+                        <button class="subtopic-button" data-subtopic="definition">Spanning Tree</button>
+                        <button class="subtopic-button" data-subtopic="definition">Circuit Rank</button>
+                        <button class="subtopic-button" data-subtopic="definition">Minimum Weighted Spanning Tree</button>
+                        <ul class="submenu-list">
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+
+
+
+                <li>
+                    <button class="topic-button" data-topic="representation">
+                        <i class="fas fa-sitemap"></i>Graph Representation
+                    </button>
+                    <ul class="subtopic-list">
+                        <li>
+                            <button class="subtopic-button" data-subtopic="adjacencyMatrix">Adjacency Matrix</button>
+                            <ul class="submenu-list">
+                                <li><button class="submenu-button" data-submenu="definition">Definition</button></li>
+                                <li><button class="submenu-button" data-submenu="implementation">Implementation</button></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <button class="subtopic-button" data-subtopic="adjacencyList">Adjacency List</button>
+                            <ul class="submenu-list">
+                                <li><button class="submenu-button" data-submenu="definition">Definition</button></li>
+                                <li><button class="submenu-button" data-submenu="implementation">Implementation</button></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <button class="topic-button" data-topic="algorithm">
+                        <i class="fas fa-code-branch"></i>Graph Algorithm
+                    </button>
+                    <ul class="subtopic-list">
+                        <li>
+                            <button class="subtopic-button" data-subtopic="traversal">Traversal Algorithms</button>
+                            <ul class="submenu-list">
+                                <li><button class="submenu-button" data-submenu="dfs">Depth-First Search (DFS)</button></li>
+                                <li><button class="submenu-button" data-submenu="bfs">Breadth-First Search (BFS)</button></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <button class="subtopic-button" data-subtopic="shortestPath">Shortest Path Algorithms</button>
+                            <ul class="submenu-list">
+                                <li><button class="submenu-button" data-submenu="dijkstra">Dijkstra's Algorithm</button></li>
+                                <li><button class="submenu-button" data-submenu="bellmanFord">Bellman-Ford Algorithm</button></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <button class="subtopic-button" data-subtopic="minimumSpanningTree">Minimum Spanning Tree</button>
+                            <ul class="submenu-list">
+                                <li><button class="submenu-button" data-submenu="kruskal">Kruskal's Algorithm</button></li>
+                                <li><button class="submenu-button" data-submenu="prim">Prim's Algorithm</button></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <button class="topic-button" data-topic="coloring">
+                        <i class="fas fa-palette"></i>Graph Coloring
+                    </button>
+                    <ul class="subtopic-list">
+                        <li>
+                            <button class="subtopic-button" data-subtopic="vertexColoring">Vertex Coloring</button>
+                            <ul class="submenu-list">
+                                <li><button class="submenu-button" data-submenu="greedyColoring">Greedy Coloring</button></li>
+                                <li><button class="submenu-button" data-submenu="welshPowell">Welsh-Powell Algorithm</button></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <button class="subtopic-button" data-subtopic="edgeColoring">Edge Coloring</button>
+                            <ul class="submenu-list">
+                                <li><button class="submenu-button" data-submenu="vizingTheorem">Vizing's Theorem</button></li>
+                                <li><button class="submenu-button" data-submenu="greedyEdgeColoring">Greedy Edge Coloring</button></li>
+                            </ul>
+                        </li>
+                        <li><button class="subtopic-button" data-subtopic="applications">Applications</button></li>
+                    </ul>
+                </li>
+                <li>
+                    <button class="topic-button" data-topic="connectivity">
+                        <i class="fas fa-network-wired"></i>Graph Connectivity
+                    </button>
+                    <ul class="subtopic-list">
+                        <li>
+                            <button class="subtopic-button" data-subtopic="vertexConnectivity">Vertex Connectivity</button>
+                            <ul class="submenu-list">
+                                <li><button class="submenu-button" data-submenu="definition">Definition</button></li>
+                                <li><button class="submenu-button" data-submenu="algorithms">Algorithms</button></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <button class="subtopic-button" data-subtopic="edgeConnectivity">Edge Connectivity</button>
+                            <ul class="submenu-list">
+                                <li><button class="submenu-button" data-submenu="definition">Definition</button></li>
+                                <li><button class="submenu-button" data-submenu="algorithms">Algorithms</button></li>
+                            </ul>
+                        </li>
+                        <li><button class="subtopic-button" data-subtopic="applications">Applications</button></li>
+                    </ul>
+                </li>
+                <li>
+                    <button class="topic-button" data-topic="planar">
+                        <i class="fas fa-draw-polygon"></i>Planar Graph
+                    </button>
+                    <ul class="subtopic-list">
+                        <li>
+                            <button class="subtopic-button" data-subtopic="definition">Definition</button>
+                            <ul class="submenu-list">
+                                <li><button class="submenu-button" data-submenu="formal">Formal Definition</button></li>
+                                <li><button class="submenu-button" data-submenu="examples">Examples</button></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <button class="subtopic-button" data-subtopic="properties">Properties</button>
+                            <ul class="submenu-list">
+                                <li><button class="submenu-button" data-submenu="eulerFormula">Euler's Formula</button></li>
+                                <li><button class="submenu-button" data-submenu="kuratowskiTheorem">Kuratowski's Theorem</button></li>
+                            </ul>
+                        </li>
+                        <li><button class="subtopic-button" data-subtopic="applications">Applications</button></li>
+                    </ul>
+                </li>
+                <li>
+                    <button class="topic-button" data-topic="advanced">
+                        <i class="fas fa-brain"></i>Advanced Graph
+                    </button>
+                    <ul class="subtopic-list">
+                        <li>
+                            <button class="subtopic-button" data-subtopic="networkFlow">Network Flow</button>
+                            <ul class="submenu-list">
+                                <li><button class="submenu-button" data-submenu="maxFlow">Maximum Flow</button></li>
+                                <li><button class="submenu-button" data-submenu="minCut">Minimum Cut</button></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <button class="subtopic-button" data-subtopic="matchings">Matchings</button>
+                            <ul class="submenu-list">
+                                <li><button class="submenu-button" data-submenu="bipartite">Bipartite Matching</button></li>
+                                <li><button class="submenu-button" data-submenu="general">General Matching</button></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <button class="subtopic-button" data-subtopic="spectralTheory">Spectral Graph Theory</button>
+                            <ul class="submenu-list">
+                                <li><button class="submenu-button" data-submenu="laplacian">Graph Laplacian</button></li>
+                                
+                                <li><button class="submenu-button" data-submenu="eigenvalues">Eigenvalues and Eigenvectors</button></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </aside>
+        <main class="main-content">
+            <div id="topic-content" class="topic-content">
+                <h2>Welcome to Graph Topics Explorer</h2>
+                <p>Select a topic from the sidebar to learn more about various graph concepts.</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <script>
+        const topicContent = {
+            graph: {
+                title: "Graph",
+                content: "Select a topic from the graph to learn more about it.",
+                subtopics: {
+                    definition: {
+                        title: "Graph Definition",
+                        content: "Select a definition to learn more about it.",
+                        submenus: {
+                            formal: {
+                                title: "Formal Definition",
+                                content: "Formally, a graph is an ordered pair G = (V, E) comprising a set V of vertices or nodes together with a set E of edges or links, which are 2-element subsets of V (i.e., an edge is associated with two vertices, and the association takes the form of the unordered pair of the vertices)."
+                            },
+                            informal: {
+                                title: "Informal Definition",
+                                content: "Informally, a graph is a collection of points (called vertices) connected by lines (called edges). It's a way of representing relationships between pairs of objects."
+                            }
+                        }
+                    },
+                    types: {
+                        title: "Types of Graphs",
+                        content: "There are several types of graphs, each with unique properties and use cases.",
+                        submenus: {
+                            directed: {
+                                title: "Directed Graphs",
+                                content: "A directed graph, also called a digraph, is a graph where edges have orientations. In other words, the edges are like one-way streets; you can only travel in one direction along them."
+                            },
+                            undirected: {
+                                title: "Undirected Graphs",
+                                content: "An undirected graph is a graph in which edges have no orientation. The edge (x, y) is identical to the edge (y, x), as there is no arrow pointing from one vertex to another."
+                            },
+                            weighted: {
+                                title: "Weighted Graphs",
+                                content: "A weighted graph is a graph in which each edge is given a numerical weight. This weight might represent distance, cost, or any other value associated with the connection between two vertices."
+                            }
+                        }
+                    },
+                    properties: {
+                        title: "Graph Properties",
+                        content: "Graphs have various properties that characterize their structure and behavior. Some important properties include connectivity, degree, path, cycle, tree, and planarity. These properties help in analyzing and solving complex problems in graph theory and its applications."
+                    }
+                }
+            },
+            representation: {
+                title: "Graph Representation",
+                content: "Graphs can be represented in various ways, primarily through adjacency matrices and adjacency lists. The choice of representation depends on the type of graph and the algorithms that will be used.",
+                subtopics: {
+                    adjacencyMatrix: {
+                        title: "Adjacency Matrix",
+                        content: "An adjacency matrix is a square matrix used to represent a finite graph. The elements of the matrix indicate whether pairs of vertices are adjacent or not in the graph.",
+                        submenus: {
+                            definition: {
+                                title: "Definition of Adjacency Matrix",
+                                content: "An adjacency matrix is a square matrix A of size |V| x |V|, where |V| is the number of vertices in the graph. The entry A[i][j] is 1 if there is an edge from vertex i to vertex j, and 0 otherwise."
+                            },
+                            implementation: {
+                                title: "Implementation of Adjacency Matrix",
+                                content: "In most programming languages, an adjacency matrix can be implemented as a 2D array or a list of lists. For an undirected graph, the adjacency matrix is symmetric."
+                            }
+                        }
+                    },
+                    adjacencyList: {
+                        title: "Adjacency List",
+                        content: "An adjacency list is a collection of unordered lists used to represent a finite graph. Each list describes the set of neighbors of a vertex in the graph.",
+                        submenus: {
+                            definition: {
+                                title: "Definition of Adjacency List",
+                                content: "An adjacency list is an array A of |V| lists, one for each vertex in the graph. For each x in V, the adjacency list A[x] contains all the vertices y such that there is an edge from x to y."
+                            },
+                            implementation: {
+                                title: "Implementation of Adjacency List",
+                                content: "In most programming languages, an adjacency list can be implemented as an array (or list) of lists, or a dictionary of lists where the keys are the vertices."
+                            }
+                        }
+                    }
+                }
+            },
+            algorithm: {
+                title: "Graph Algorithms",
+                content: "Graph algorithms are a set of instructions that traverse (visit nodes of) a graph. These algorithms are used to solve various problems related to graphs.",
+                subtopics: {
+                    traversal: {
+                        title: "Traversal Algorithms",
+                        content: "Traversal algorithms are used to visit all the vertices of a graph in a specific order.",
+                        submenus: {
+                            dfs: {
+                                title: "Depth-First Search (DFS)",
+                                content: "DFS is an algorithm for traversing or searching tree or graph data structures. It starts at a selected node and explores as far as possible along each branch before backtracking."
+                            },
+                            bfs: {
+                                title: "Breadth-First Search (BFS)",
+                                content: "BFS is an algorithm for traversing or searching tree or graph data structures. It starts at a selected node and explores all the neighboring nodes at the present depth prior to moving on to the nodes at the next depth level."
+                            }
+                        }
+                    },
+                    shortestPath: {
+                        title: "Shortest Path Algorithms",
+                        content: "Shortest path algorithms are used to find the shortest path between vertices in a graph.",
+                        submenus: {
+                            dijkstra: {
+                                title: "Dijkstra's Algorithm",
+                                content: "Dijkstra's algorithm is an algorithm for finding the shortest paths between nodes in a graph, which may represent, for example, road networks."
+                            },
+                            bellmanFord: {
+                                title: "Bellman-Ford Algorithm",
+                                content: "The Bellman–Ford algorithm is an algorithm that computes shortest paths from a single source vertex to all of the other vertices in a weighted digraph."
+                            }
+                        }
+                    },
+                    minimumSpanningTree: {
+                        title: "Minimum Spanning Tree Algorithms",
+                        content: "Minimum spanning tree algorithms are used to find a subset of the edges of a connected, edge-weighted undirected graph that connects all the vertices together, without any cycles and with the minimum possible total edge weight.",
+                        submenus: {
+                            kruskal: {
+                                title: "Kruskal's Algorithm",
+                                content: "Kruskal's algorithm finds a minimum spanning forest of an undirected edge-weighted graph. If the graph is connected, it finds a minimum spanning tree."
+                            },
+                            prim: {
+                                title: "Prim's Algorithm",
+                                content: "Prim's algorithm is a greedy algorithm that finds a minimum spanning tree for a weighted undirected graph."
+                            }
+                        }
+                    }
+                }
+            },
+            coloring: {
+                title: "Graph Coloring",
+                content: "Graph coloring is the assignment of labels, called colors, to elements of a graph subject to certain constraints. In its simplest form, it is a way of coloring the vertices of a graph such that no two adjacent vertices are of the same color.",
+                subtopics: {
+                    vertexColoring: {
+                        title: "Vertex Coloring",
+                        content: "Vertex coloring is the most common type of graph coloring. The goal is to assign colors to vertices such that no two adjacent vertices share the same color.",
+                        submenus: {
+                            greedyColoring: {
+                                title: "Greedy Coloring Algorithm",
+                                content: "The greedy coloring algorithm is a simple method for vertex coloring. It assigns the first available color to each vertex, considering the colors of its adjacent vertices."
+                            },
+                            welshPowell: {
+                                title: "Welsh-Powell Algorithm",
+                                content: "The Welsh-Powell algorithm is another approach to vertex coloring. It first sorts the vertices by degree, then assigns colors to non-adjacent vertices in that order."
+                            }
+                        }
+                    },
+                    edgeColoring: {
+                        title: "Edge Coloring",
+                        content: "Edge coloring assigns colors to the edges of a graph such that no two adjacent edges share the same color.",
+                        submenus: {
+                            vizingTheorem: {
+                                title: "Vizing's Theorem",
+                                content: "Vizing's theorem states that the edge chromatic number of a simple graph is either its maximum degree or its maximum degree plus one."
+                            },
+                            greedyEdgeColoring: {
+                                title: "Greedy Edge Coloring",
+                                content: "The greedy edge coloring algorithm assigns colors to edges one by one, using the first available color that doesn't conflict with adjacent edges."
+                            }
+                        }
+                    },
+                    applications: {
+                        title: "Applications of Graph Coloring",
+                        content: "Graph coloring has various practical applications, including map coloring, scheduling problems, register allocation in compilers, and solving Sudoku puzzles."
+                    }
+                }
+            },
+            connectivity: {
+                title: "Graph Connectivity",
+                content: "Graph connectivity refers to the minimum number of elements (nodes or edges) that need to be removed to disconnect the remaining nodes from each other. It's a measure of how connected a graph is, and how difficult it is to separate its nodes into isolated groups.",
+                subtopics: {
+                    vertexConnectivity: {
+                        title: "Vertex Connectivity",
+                        content: "Vertex connectivity is the minimum number of vertices that need to be removed to disconnect the graph.",
+                        submenus: {
+                            definition: {
+                                title: "Definition of Vertex Connectivity",
+                                content: "The vertex connectivity of a graph G, denoted κ(G), is the minimum number of vertices whose removal results in a disconnected graph or a trivial graph."
+                            },
+                            algorithms: {
+                                title: "Algorithms for Vertex Connectivity",
+                                content: "Algorithms for finding vertex connectivity include the Ford-Fulkerson algorithm and Edmonds-Karp algorithm, which are based on maximum flow techniques."
+                            }
+                        }
+                    },
+                    edgeConnectivity: {
+                        title: "Edge Connectivity",
+                        content: "Edge connectivity is the minimum number of edges that need to be removed to disconnect the graph.",
+                        submenus: {
+                            definition: {
+                                title: "Definition of Edge Connectivity",
+                                content: "The edge connectivity of a graph G, denoted λ(G), is the minimum number of edges whose removal results in a disconnected graph."
+                            },
+                            algorithms: {
+                                title: "Algorithms for Edge Connectivity",
+                                content: "Algorithms for finding edge connectivity include the Ford-Fulkerson algorithm and the Stoer-Wagner algorithm."
+                            }
+                        }
+                    },
+                    applications: {
+                        title: "Applications of Graph Connectivity",
+                        content: "Graph connectivity has applications in network reliability, determining the robustness of communication networks, and analyzing social networks."
+                    }
+                }
+            },
+            planar: {
+                title: "Planar Graph",
+                content: "A planar graph is a graph that can be embedded in the plane, i.e., it can be drawn on the plane in such a way that its edges intersect only at their endpoints. In other words, it can be drawn in such a way that no edges cross each other.",
+                subtopics: {
+                    definition: {
+                        title: "Definition of Planar Graphs",
+                        content: "A planar graph is a graph that can be drawn in the plane without edge crossings.",
+                        submenus: {
+                            formal: {
+                                title: "Formal Definition",
+                                content: "A graph is planar if and only if it can be drawn in the plane such that its edges intersect only at their endpoints."
+                            },
+                            examples: {
+                                title: "Examples of Planar Graphs",
+                                content: "Examples of planar graphs include trees, cycles, and the graphs of convex polyhedra such as cubes and tetrahedra."
+                            }
+                        }
+                    },
+                    properties: {
+                        title: "Properties of Planar Graphs",
+                        content: "Planar graphs have several important properties that distinguish them from non-planar graphs.",
+                        submenus: {
+                            eulerFormula: {
+                                title: "Euler's Formula",
+                                content: "For a connected planar graph, Euler's formula states that V - E + F = 2, where V is the number of vertices, E is the number of edges, and F is the number of faces."
+                            },
+                            kuratowskiTheorem: {
+                                title: "Kuratowski's Theorem",
+                                content: "Kuratowski's theorem states that a finite graph is planar if and only if it does not contain a subgraph that is a subdivision of K5 (the complete graph on five vertices) or K3,3 (the complete bipartite graph on six vertices, three of which connect to each of the other three)."
+                            }
+                        }
+                    },
+                    applications: {
+                        title: "Applications of Planar Graphs",
+                        content: "Planar graphs have applications in circuit design, map making, and graph drawing algorithms."
+                    }
+                }
+            },
+            advanced: {
+                title: "Advanced Graph Topics",
+                content: "Advanced graph topics include complex algorithms and specialized graph types. These may include topics like network flow algorithms, graph isomorphism, spectral graph theory, random graphs, and applications of graph theory in machine learning and artificial intelligence.",
+                subtopics: {
+                    networkFlow: {
+                        title: "Network Flow",
+                        content: "Network flow problems involve finding the maximum flow through a flow network, which has applications in transportation, logistics, and computer networking.",
+                        submenus: {
+                            maxFlow: {
+                                title: "Maximum Flow",
+                                content: "The maximum flow problem involves finding a feasible flow through a single-source, single-sink flow network that is maximum."
+                            },
+                            minCut: {
+                                title: "Minimum Cut",
+                                content: "The minimum cut problem is to find a cut of minimum capacity that separates the source and the sink in a flow network."
+                            }
+                        }
+                    },
+                    matchings: {
+                        title: "Matchings in Graphs",
+                        content: "A matching in a graph is a set of edges without common vertices.",
+                        submenus: {
+                            bipartite: {
+                                title: "Bipartite Matching",
+                                content: "Bipartite matching deals with finding maximum matchings in bipartite graphs, often solved using the Hungarian algorithm or network flow techniques."
+                            },
+                            general: {
+                                title: "General Matching",
+                                content: "General matching problems involve finding maximum matchings in non-bipartite graphs, often solved using Edmonds' blossom algorithm."
+                            }
+                        }
+                    },
+                    spectralTheory: {
+                        title: "Spectral Graph Theory",
+                        content: "Spectral graph theory studies the properties of graphs in relation to the eigenvalues and eigenvectors of matrices associated with the graph, such as its adjacency matrix or Laplacian matrix.",
+                        submenus: {
+                            laplacian: {
+                                title: "Graph Laplacian",
+                                content: "The graph Laplacian is a matrix representation of a graph, which can be used to find many useful properties of the graph."
+                            },
+                            eigenvalues: {
+                                title: "Eigenvalues and Eigenvectors",
+                                content: "The eigenvalues and eigenvectors of graph matrices provide important information about the structure and properties of the graph."
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        function updateContent(content) {
+            const topicContentElement = document.getElementById('topic-content');
+            topicContentElement.innerHTML = `
+                <h2>${content.title}</h2>
+                <p>${content.content}</p>
+            `;
+            topicContentElement.classList.remove('animation-fade-in');
+            void topicContentElement.offsetWidth; // Trigger reflow
+            topicContentElement.classList.add('animation-fade-in');
+        }
+
+        document.querySelectorAll('.topic-button').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const topic = button.dataset.topic;
+                const content = topicContent[topic];
+                
+                document.querySelectorAll('.topic-button').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                updateContent(content);
+            });
+        });
+
+        document.querySelectorAll('.subtopic-button').forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.stopPropagation();
+                const topic = button.closest('.topic-list > li').querySelector('.topic-button').dataset.topic;
+                const subtopic = button.dataset.subtopic;
+                const content = topicContent[topic].subtopics[subtopic];
+                
+                document.querySelectorAll('.subtopic-button').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                updateContent(content);
+            });
+        });
+
+        document.querySelectorAll('.submenu-button').forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.stopPropagation();
+                const topic = button.closest('.topic-list > li').querySelector('.topic-button').dataset.topic;
+                const subtopic = button.closest('.subtopic-list > li').querySelector('.subtopic-button').dataset.subtopic;
+                const submenu = button.dataset.submenu;
+                const content = topicContent[topic].subtopics[subtopic].submenus[submenu];
+                
+                document.querySelectorAll('.submenu-button').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                updateContent(content);
+            });
+        });
+    </script>
+</body>
+</html>

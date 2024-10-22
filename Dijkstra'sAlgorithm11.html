@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dijkstra's Algorithm</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        :root {
+            --primary-color: #6C63FF;
+            --secondary-color: #4A4A4A;
+            --background-color: #F0F2F5;
+            --text-color: #333333;
+            --highlight-color: #FF6584;
+            --accent-color-1: #00C9A7;
+            --accent-color-2: #FFC75F;
+            --accent-color-3: #845EC2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 3.5em;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1::before,
+        h1::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 50px;
+            height: 3px;
+            background-color: var(--highlight-color);
+        }
+
+        h1::before {
+            left: -60px;
+        }
+
+        h1::after {
+            right: -60px;
+        }
+
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+        }
+
+        .text-content,
+        .video-content {
+            flex-basis: calc(50% - 15px);
+            background-color: #FFFFFF;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .text-content::before,
+        .video-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--accent-color-1), var(--accent-color-2), var(--accent-color-3));
+        }
+
+        .text-content:hover,
+        .video-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        @media (max-width: 768px) {
+            .text-content,
+            .video-content {
+                flex-basis: 100%;
+            }
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, var(--accent-color-1), var(--accent-color-2));
+        }
+
+        p,
+        ul {
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        ul {
+            padding-left: 20px;
+            list-style-type: none;
+        }
+
+        li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color-3);
+            font-size: 1.5em;
+            line-height: 1;
+        }
+
+        video {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight {
+            color: var(--highlight-color);
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .highlight::before {
+            content: '';
+            position: absolute;
+            z-index: -1;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 0.3em;
+            background-color: var(--accent-color-2);
+            opacity: 0.4;
+            transition: height 0.3s ease;
+        }
+
+        .highlight:hover::before {
+            height: 100%;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .text-content,
+        .video-content {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .text-content {
+            animation-delay: 0.2s;
+        }
+
+        .video-content {
+            animation-delay: 0.4s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Dijkstra's Algorithm</h1>
+        <div class="content">
+            <div class="text-content">
+                <h2>Overview</h2>
+                <p>Dijkstra's algorithm is a <span class="highlight">graph search algorithm</span> that solves the single-source shortest path problem for a graph with non-negative edge path costs, producing a shortest path tree.</p>
+                <p>This algorithm is widely used in <span class="highlight">network routing protocols</span>, most notably IS-IS (Intermediate System to Intermediate System) and Open Shortest Path First (OSPF).</p>
+                <h2>Key Features</h2>
+                <ul>
+                    <li>Finds the <span class="highlight">shortest path</span> between a given source vertex and all other vertices in the graph.</li>
+                    <li>Uses a <span class="highlight">greedy approach</span> to solve the problem.</li>
+                    <li>Works on both <span class="highlight">directed and undirected graphs</span> with non-negative edge weights.</li>
+                    <li>Time complexity: <span class="highlight">O((V+E) log V)</span> with a binary heap implementation.</li>
+                </ul>
+            </div>
+            <div class="video-content">
+                <h2>Visual Representation</h2>
+                <!-- Embedding the YouTube video properly -->
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/EFg3u_E6eHU?si=l6kPxn6RjJ1iKih_" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

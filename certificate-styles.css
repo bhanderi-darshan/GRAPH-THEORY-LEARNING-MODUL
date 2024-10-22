@@ -1,0 +1,106 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.certificate {
+    width: 800px;
+    height: 600px;
+    background-color: #fff;
+    border: 20px solid #4CAF50;
+    padding: 40px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.certificate-header h1 {
+    text-align: center;
+    color: #4CAF50;
+    font-size: 48px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.certificate-body {
+    text-align: center;
+}
+
+.certificate-body p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.student-name {
+    font-size: 36px;
+    color: #333;
+    margin: 20px 0;
+}
+
+.quiz-name {
+    font-size: 24px;
+    color: #4CAF50;
+    margin: 20px 0;
+}
+
+.score {
+    font-size: 48px;
+    color: #4CAF50;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.certificate-footer {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    right: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.date {
+    font-size: 14px;
+    color: #666;
+}
+
+.signature {
+    text-align: center;
+}
+
+.signature-image {
+    width: 150px;
+    margin-bottom: 10px;
+}
+
+.signature p {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+}
+
+.certificate-border {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    border: 2px solid #4CAF50;
+    pointer-events: none;
+}
+
+@media print {
+    body {
+        background-color: #fff;
+    }
+    .certificate {
+        box-shadow: none;
+        border: none;
+    }
+}

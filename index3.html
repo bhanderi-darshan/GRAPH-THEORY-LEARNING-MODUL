@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Student Quiz</title>
+    <link rel="stylesheet" href="styles1.css">
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Advanced Student Quiz</h1>
+        
+        <div class="tab">
+            <button class="tablinks" onclick="openLevel(event, 'Easy')" id="defaultOpen">Easy</button>
+            <button class="tablinks" onclick="openLevel(event, 'Medium')">Medium</button>
+            <button class="tablinks" onclick="openLevel(event, 'Hard')">Hard</button>
+        </div>
+
+        <div id="Easy" class="tabcontent">
+            <h2>Easy Questions</h2>
+            <form>
+                <div class="question">
+                    <h3>1. What is the capital of France?</h3>
+                    <label><input type="radio" name="q1" value="a"> London</label>
+                    <label><input type="radio" name="q1" value="b"> Berlin</label>
+                    <label><input type="radio" name="q1" value="c"> Paris</label>
+                    <label><input type="radio" name="q1" value="d"> Madrid</label>
+                </div>
+                
+                <div class="question">
+                    <h3>2. Which planet is closest to the Sun?</h3>
+                    <label><input type="radio" name="q2" value="a"> Venus</label>
+                    <label><input type="radio" name="q2" value="b"> Mars</label>
+                    <label><input type="radio" name="q2" value="c"> Mercury</label>
+                    <label><input type="radio" name="q2" value="d"> Jupiter</label>
+                </div>
+                
+               
+            </form>
+        </div>
+
+        <div id="Medium" class="tabcontent">
+            <h2>Medium Questions</h2>
+            <form>
+                <div class="question">
+                    <h3>1. Which element has the chemical symbol 'Fe'?</h3>
+                    <label><input type="radio" name="q1" value="a"> Iron</label>
+                    <label><input type="radio" name="q1" value="b"> Gold</label>
+                    <label><input type="radio" name="q1" value="c"> Silver</label>
+                    <label><input type="radio" name="q1" value="d"> Copper</label>
+                </div>
+                
+                <div class="question">
+                    <h3>2. In which year did World War II end?</h3>
+                    <label><input type="radio" name="q2" value="a"> 1943</label>
+                    <label><input type="radio" name="q2" value="b"> 1945</label>
+                    <label><input type="radio" name="q2" value="c"> 1947</label>
+                    <label><input type="radio" name="q2" value="d"> 1950</label>
+                </div>
+                
+         
+            </form>
+        </div>
+
+        <div id="Hard" class="tabcontent">
+            <h2>Hard Questions</h2>
+            <form>
+                <div class="question">
+                    <h3>1. In quantum mechanics, what is the Schrödinger equation used for?</h3>
+                    <label><input type="radio" name="q1" value="a"> Describing the behavior of waves</label>
+                    <label><input type="radio" name="q1" value="b"> Calculating the mass of particles</label>
+                    <label><input type="radio" name="q1" value="c"> Predicting the weather</label>
+                    <label><input type="radio" name="q1" value="d"> Describing the wave function of a quantum-mechanical system</label>
+                </div>
+                
+                <div class="question">
+                    <h3>2. Which of the following is not a type of fundamental interaction in physics?</h3>
+                    <label><input type="radio" name="q2" value="a"> Strong nuclear force</label>
+                    <label><input type="radio" name="q2" value="b"> Weak nuclear force</label>
+                    <label><input type="radio" name="q2" value="c"> Electromagnetic force</label>
+                    <label><input type="radio" name="q2" value="d"> Centrifugal force</label>
+                </div>
+                
+                <!-- Add more hard questions here -->
+            </form>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit Quiz</button>
+    </div>
+
+    <script>
+        function openLevel(evt, levelName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(levelName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        document.getElementById("defaultOpen").click();
+    </script>
+</body>
+</html> 
+
